@@ -1,44 +1,47 @@
 #include "D:\c++\Project1\project1\TXLib.h"
-
-void drawVopros(const char* text);
+//РҐР«РҐР«РҐР«РҐР«РҐРҐР«
+//РђР—РђРђР—РђР—
+//
+//
+void drawVopros(                            const char* textVoprosa,
+                int xOtveta1, int yOtveta1, const char* textOtveta1,
+                int xOtveta2, int yOtveta2, const char* textOtveta2);
+void drawFormulirovkaVoprosa(const char* text);
+void drawOtvet(int x, int y, const char* text);
 
 int main()
 {
     txCreateWindow(600, 400);
-
-    txSetFillColor(TX_WHITE);
-    txClear();
-    drawVopros("Вопрос1!");
-
-    txRectangle(100, 250, 250, 350);
-    txDrawText (100, 250, 250, 350, "Ответ1!");
-    txRectangle(350, 250, 500, 350);
-    txDrawText (350, 250, 500, 350, "Ответ2!");
-
-    txSleep(10000);
-    txSetFillColor(TX_WHITE);
-    txClear();
-    drawVopros("Вопрос2!");
-
-    txRectangle(100, 250, 250, 350);
-    txDrawText (100, 250, 250, 350, "Ответ11!");
-    txRectangle(350, 250, 500, 350);
-    txDrawText (350, 250, 500, 350, "Ответ22!");
+    drawVopros("Р’РѕРїСЂРѕСЃ1!", 100, 250, "РћС‚РІРµС‚11!", 350, 250, "РћС‚РІРµС‚12!");
     txSleep(10000);
 
-    txSetFillColor(TX_WHITE);
-    txClear();
-    drawVopros("Вопрос3!");
+    drawVopros("Р’РѕРїСЂРѕСЃ2!", 100, 250, "РћС‚РІРµС‚21!", 350, 250, "РћС‚РІРµС‚22!");
+    txSleep(10000);
 
-    txRectangle(100, 250, 250, 350);
-    txDrawText (100, 250, 250, 350, "Ответ31!");
-    txRectangle(350, 250, 500, 350);
-    txDrawText (350, 250, 500, 350, "Ответ32!");
+    drawVopros("Р’РѕРїСЂРѕСЃ3!", 100, 250, "РћС‚РІРµС‚31!", 350, 250, "РћС‚РІРµС‚32!");
+
     return 0;
 }
 
+void drawVopros(                            const char* textVoprosa,
+                int xOtveta1, int yOtveta1, const char* textOtveta1,
+                int xOtveta2, int yOtveta2, const char* textOtveta2)
+{
+    txSetFillColor(TX_WHITE);
+    txClear();
+    drawFormulirovkaVoprosa(textVoprosa);
+    drawOtvet(xOtveta1, yOtveta1, textOtveta1);
+    drawOtvet(xOtveta2, yOtveta2, textOtveta2);
+}
 
-void drawVopros(const char* text)
+void drawOtvet(int x, int y, const char* text)
+{
+    txSetFillColor(TX_GRAY);
+    txRectangle(x, y, x + 150, y + 100);
+    txDrawText (x, y, x + 150, y + 100, text);
+}
+
+void drawFormulirovkaVoprosa(const char* text)
 {
     txSetFillColor(TX_GRAY);
     txRectangle(100, 100, 500, 200);
