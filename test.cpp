@@ -1,44 +1,51 @@
 #include "D:\c++\Project1\project1\TXLib.h"
-//ХЫХЫХЫХЫХХЫ
-//АЗААЗАЗ
-//
-//
-void drawVopros(                            const char* textVoprosa,
-                int xOtveta1, int yOtveta1, const char* textOtveta1,
-                int xOtveta2, int yOtveta2, const char* textOtveta2);
+
+struct Otvet
+{
+    int x;
+    int y;
+    const char* text;
+    COLORREF color;
+};
+
+void drawVopros(const char* textVoprosa, Otvet* otvet1, Otvet* otvet2);
 void drawFormulirovkaVoprosa(const char* text);
-void drawOtvet(int x, int y, const char* text);
+void drawOtvet(Otvet* otvet);
 
 int main()
 {
     txCreateWindow(600, 400);
-    drawVopros("Вопрос1!", 100, 250, "Ответ11!", 350, 250, "Ответ12!");
+    Otvet otvet11 = {100, 250, "Ответ11!", TX_YELLOW};
+    Otvet otvet12 = {350, 250, "Ответ12!", TX_GREEN};
+    drawVopros("Вопрос1!", &otvet11, &otvet12);
     txSleep(10000);
 
-    drawVopros("Вопрос2!", 100, 250, "Ответ21!", 350, 250, "Ответ22!");
+    Otvet otvet21 = {100, 250, "Ответ21!", TX_YELLOW};
+    Otvet otvet22 = {350, 250, "Ответ22!", TX_GREEN};
+    drawVopros("Вопрос2!", &otvet21, &otvet22);
     txSleep(10000);
 
-    drawVopros("Вопрос3!", 100, 250, "Ответ31!", 350, 250, "Ответ32!");
+    Otvet otvet31 = {100, 250, "Ответ31!", TX_YELLOW};
+    Otvet otvet32 = {350, 250, "Ответ32!", TX_GREEN};
+    drawVopros("Вопрос3!", &otvet31, &otvet32);
 
     return 0;
 }
 
-void drawVopros(                            const char* textVoprosa,
-                int xOtveta1, int yOtveta1, const char* textOtveta1,
-                int xOtveta2, int yOtveta2, const char* textOtveta2)
+void drawVopros(const char* textVoprosa, Otvet* otvet1, Otvet* otvet2)
 {
     txSetFillColor(TX_WHITE);
     txClear();
     drawFormulirovkaVoprosa(textVoprosa);
-    drawOtvet(xOtveta1, yOtveta1, textOtveta1);
-    drawOtvet(xOtveta2, yOtveta2, textOtveta2);
+    drawOtvet(otvet1);
+    drawOtvet(otvet2);
 }
 
-void drawOtvet(int x, int y, const char* text)
+void drawOtvet(Otvet* otvet)
 {
-    txSetFillColor(TX_GRAY);
-    txRectangle(x, y, x + 150, y + 100);
-    txDrawText (x, y, x + 150, y + 100, text);
+    txSetFillColor(otvet->color);
+    txRectangle(otvet->x, otvet->y, otvet->x + 150, otvet->y + 100);
+    txDrawText (otvet->x, otvet->y, otvet->x + 150, otvet->y + 100, otvet->text);
 }
 
 void drawFormulirovkaVoprosa(const char* text)
