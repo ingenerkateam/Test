@@ -1,4 +1,4 @@
-#include "D:\c++\Project1\project1\TXLib.h"
+#include "TXLib.h"
 
 struct Otvet
 {
