@@ -8,7 +8,19 @@ struct Otvet
     COLORREF color;
 };
 
-void drawVopros(const char* textVoprosa, Otvet* otvet1, Otvet* otvet2);
+struct Vopros
+{
+    const char* text;
+    HDC* fon;
+    Otvet otvet1;
+    Otvet otvet2;
+};
+
+void drawVopros2(Vopros* vopros);
+void drawVopros(const char* textVoprosa,
+                 HDC* fon,
+                 Otvet* otvet1,
+                 Otvet* otvet2);
 void drawFormulirovkaVoprosa(const char* text);
 void drawOtvet(Otvet* otvet);
 void drawNextQuestionButton();
@@ -18,28 +30,36 @@ int main()
 {
     txCreateWindow(600, 400);
 
-    const char* textVoprosa = "Вопрос1!";
+    const char* textVoprosa;// = "Вопрос1!";
     Otvet otvet11;
     Otvet otvet12;
+    //Vopros vopros;
     int nomerVoprosa = 1;
+    HDC  fon;
+
 
     while (!GetAsyncKeyState(VK_ESCAPE)) {
 
         if (nomerVoprosa == 1) {
             textVoprosa = "Вопрос1!";
-            otvet11 = {100, 250, "Ответ11!", TX_YELLOW};
+            fon = txLoadImage ("fon1.bmp");
+            otvet11 = {100, 250, "Ответ11!", TX_RED};
             otvet12 = {350, 250, "Ответ12!", TX_GREEN};
+            Vopros vopros = {"Вопрос1!", &fon, {100, 250, "Ответ11!", TX_RED},{350, 250, "Ответ12!", TX_GREEN}};
+
         } else if (nomerVoprosa == 2) {
             textVoprosa = "Вопрос2!";
-            otvet11 = {100, 250, "Ответ21!", TX_YELLOW};
-            otvet12 = {350, 250, "Ответ22!", TX_GREEN};
+            fon = txLoadImage ("fon2.bmp");
+            otvet11 = {100, 250, "Ответ21!", TX_BLUE};
+            otvet12 = {350, 250, "Ответ22!", TX_BLACK};
         } else if (nomerVoprosa == 3) {
             textVoprosa = "Вопрос3!";
-            otvet11 = {100, 250, "Ответ31!", TX_YELLOW};
-            otvet12 = {350, 250, "Ответ32!", TX_GREEN};
+            fon = txLoadImage ("fon3.bmp");
+            otvet11 = {100, 250, "Ответ31!", TX_ORANGE};
+            otvet12 = {350, 250, "Ответ32!", TX_YELLOW};
         }
 
-        drawVopros(textVoprosa, &otvet11, &otvet12);
+        drawVopros(textVoprosa, &fon, &otvet11, &otvet12);
         drawNextQuestionButton();
         drawPrevQuestionButton();
 
@@ -61,30 +81,29 @@ int main()
         }
 
         txSleep(10);
-        /*txSleep(10000);
-
-        Otvet otvet21 = {100, 250, "Ответ21!", TX_YELLOW};
-        Otvet otvet22 = {350, 250, "Ответ22!", TX_GREEN};
-        drawVopros("Вопрос2!", &otvet21, &otvet22);
-        drawNextQuestionButton();
-        txSleep(10000);
-
-        Otvet otvet31 = {100, 250, "Ответ31!", TX_YELLOW};
-        Otvet otvet32 = {350, 250, "Ответ32!", TX_GREEN};
-        drawVopros("Вопрос3!", &otvet31, &otvet32);
-        drawNextQuestionButton();*/
-
     }
+
+    txDeleteDC(fon);
     return 0;
 }
 
-void drawVopros(const char* textVoprosa, Otvet* otvet1, Otvet* otvet2)
+void drawVopros(const char* textVoprosa, HDC* fon, Otvet* otvet1, Otvet* otvet2)
 {
-    txSetFillColor(TX_WHITE);
-    txClear();
+    txBitBlt (txDC(), 0, 0, txGetExtentX(), txGetExtentY(), *fon, 0, 0);
+
     drawFormulirovkaVoprosa(textVoprosa);
     drawOtvet(otvet1);
     drawOtvet(otvet2);
+}
+
+
+void drawVopros2(Vopros* vopros)
+{
+    txBitBlt (txDC(), 0, 0, txGetExtentX(), txGetExtentY(), *vopros->fon, 0, 0);
+
+    drawFormulirovkaVoprosa(vopros->text);
+    drawOtvet(&vopros->otvet1);
+    drawOtvet(&vopros->otvet2);
 }
 
 void drawOtvet(Otvet* otvet)
