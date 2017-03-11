@@ -1,4 +1,6 @@
 #include "D:\c++\Project1\project1\TXLib.h"
+#include <fstream>
+#include <string>
 
 struct Otvet
 {
@@ -29,17 +31,25 @@ void drawFormulirovkaVoprosa(const char* text);
 void drawOtvet(Otvet* otvet);
 void drawNextQuestionButton();
 void drawPrevQuestionButton();
+Vopros getVopros(int nomerVoprosa);
 
+using namespace std;
 int main()
 {
     txCreateWindow(600, 400);
+    ifstream file("1.txt");
 
+    while(file) {
+        string str;
+        getline(file, str);
+        // Обработка строки str
+        cout << str << endl;
+    }
+    txSleep(5000);
     const char* textVoprosa;// = "Вопрос1!";
-    HDC  fon;
     Otvet otvet11;
     Otvet otvet12;
-    Vopros vopros;
-
+/*
     Vopros voprosy[20];
     fon = txLoadImage ("fon1.bmp");
     voprosy[1] = {"Люся - это?!", &fon, {100, 250, "Леня!", TX_RED},{350, 250, "Костя!", TX_GREEN},{200, 0, "Даня!", TX_PINK}}; //BRUTAL COLOUR
@@ -51,16 +61,11 @@ int main()
     voprosy[4] = {"Пеппа - это?!", &fon, {100, 250, "Свинка!", TX_ORANGE},{350, 250, "Хрюшка!", TX_GREEN}};
     fon = txLoadImage ("fon3.bmp");
     voprosy[5] = {"Учителъ - это?!", &fon, {100, 250, "Гитлер!", TX_ORANGE},{350, 250, "Абрамов!", TX_GREEN}};
-
+*/
     int nomerVoprosa = 1;
-
+    Vopros vopros = getVopros(nomerVoprosa);
 
     while (!GetAsyncKeyState(VK_ESCAPE)) {
-
-        if (nomerVoprosa >= 1 and
-            nomerVoprosa <= 5) {
-            vopros = voprosy[nomerVoprosa];
-        }
 
         drawVopros2(&vopros);
         drawNextQuestionButton();
@@ -71,6 +76,10 @@ int main()
             if (txMouseX() >= 50 and txMouseX() <= 100 and
                 txMouseY() >= 50 and txMouseY() <= 100) {
                 nomerVoprosa = nomerVoprosa - 1;
+                if (nomerVoprosa >= 1 and
+                    nomerVoprosa <= 5) {
+                    vopros = getVopros(nomerVoprosa);
+                }
                 txSleep(1000);
             }
         }
@@ -79,6 +88,10 @@ int main()
             if (txMouseX() >=500 and txMouseX() <= 550 and
                 txMouseY() >= 50 and txMouseY() <= 100) {
                 nomerVoprosa = nomerVoprosa + 1;
+                if (nomerVoprosa >= 1 and
+                    nomerVoprosa <= 5) {
+                    vopros = getVopros(nomerVoprosa);
+                }
                 txSleep(1000);
             }
         }
@@ -86,8 +99,26 @@ int main()
         txSleep(10);
     }
 
-    txDeleteDC(fon);
     return 0;
+}
+
+Vopros getVopros(int nomerVoprosa)
+{
+    HDC  fon;
+    Vopros voprosy[20];
+    //fon = txLoadImage ("fon1.bmp");
+    voprosy[1] = {"Люся - это?!", &fon, {100, 250, "Леня!", TX_RED},{350, 250, "Костя!", TX_GREEN},{200, 0, "Даня!", TX_PINK}}; //BRUTAL COLOUR
+    //fon = txLoadImage ("fon2.bmp");
+    voprosy[2] = {"Вася - это?!", &fon, {100, 250, "Пупкин!", TX_RED},{350, 250, "Пупок!", TX_ORANGE},{200, 10, "ВОРОНИН!!!!", TX_ORANGE}};
+    //fon = txLoadImage ("fon3.bmp");
+    voprosy[3] = {"Винни - это?!", &fon, {100, 250, "Пух!", TX_ORANGE},{350, 250, "Медведь!", TX_GREEN}};
+    //fon = txLoadImage ("fon2.bmp");
+    voprosy[4] = {"Пеппа - это?!", &fon, {100, 250, "Свинка!", TX_ORANGE},{350, 250, "Хрюшка!", TX_GREEN}};
+    //fon = txLoadImage ("fon3.bmp");
+    voprosy[5] = {"Учителъ - это?!", &fon, {100, 250, "Гитлер!", TX_ORANGE},{350, 250, "Абрамов!", TX_GREEN}};
+    txDeleteDC(fon);
+
+    return voprosy[nomerVoprosa];
 }
 
 void drawVopros(const char* textVoprosa, HDC* fon, Otvet* otvet1, Otvet* otvet2, Otvet* otvet3 )
@@ -97,7 +128,7 @@ void drawVopros(const char* textVoprosa, HDC* fon, Otvet* otvet1, Otvet* otvet2,
     drawFormulirovkaVoprosa(textVoprosa);
     drawOtvet(otvet1);
     drawOtvet(otvet2);
-    drawOtvet(otvet3);
+    //drawOtvet(otvet3);
 }
 
 
