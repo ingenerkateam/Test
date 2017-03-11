@@ -1,0 +1,22 @@
+<vopros>
+    <text>"Люся - это?!"</text>
+    <fon>"fon1.bmp"</fon>
+    <otvet1>
+        <x>100</x>
+        <y>250</y>
+        <text>"Леня!"</text>
+        <color>TX_RED</color>
+    </otvet1>
+    <otvet2>
+        <x>350</x>
+        <y>250</y>
+        <text>"Костя!"</text>
+        <color>TX_GREEN</color>
+    </otvet2>
+    <otvet3>
+        <x>200</x>
+        <y>0</y>
+        <text>"Даня!"</text>
+        <color>TX_PINK</color>
+    </otvet3>
+</vopros>

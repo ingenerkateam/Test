@@ -1,0 +1,26 @@
+"vopros":
+{
+    "text": "Люся - это?!",
+    "fon": "fon1.bmp",
+    "otvet1":
+    {
+        "x": "100",
+        "y": "250",
+        "text": "Леня!",
+        "color": "TX_RED"
+    },
+    "otvet2":
+    {
+        "x": "350",
+        "y": "250",
+        "text": "Костя!",
+        "color": "TX_GREEN"
+    },
+    "otvet3":
+    {
+        "x": "200",
+        "y": "0",
+        "text": "Даня!",
+        "color": "TX_PINK"
+    }
+}
